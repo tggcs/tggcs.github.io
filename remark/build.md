@@ -4,7 +4,12 @@
 发布：直接提价即可
 jekll教程: http://jekyllcn.com/docs/usage/
 
+站点：https://tggcs.github.io/
+谷歌分析：https://analytics.google.com/analytics/web/?authuser=0#/p344683639/reports/intelligenthome?params=_u..nav%3Dmaui
+markdown-it: https://markdown-it.github.io/
+
+风格参考: https://vuejs.org/guide/introduction.html
+
 todo:
 1. 留言功能
-2. 访问信息抓取
-3. seo优化
+2. seo优化

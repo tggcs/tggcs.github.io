@@ -1,0 +1,36 @@
+/***********************/
+/******* 重置样式 *******/
+/***********************/
+.post-content {
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+}
+.post-content blockquote {
+  font-size: 14px;
+  font-style: normal;
+  color: #3c3c3cb3;
+}
+.post-content code {
+  color: #476582;
+}
+
+/************************/
+/******* 自定义标签 *******/
+/************************/
+
+/* 自定义标题 */
+tg-tit {
+  margin: 4rem 0 1.8rem;
+  border-top: 1px solid #3c3c3c1f;
+  padding-top: 1.8rem;
+  font-size: 24px;
+  letter-spacing: -.02em;
+  font-weight: 600;
+  line-height: 1.5;
+  display: block;
+}
+/* 自定义段落 */
+tg-p {
+  display: block;
+}
