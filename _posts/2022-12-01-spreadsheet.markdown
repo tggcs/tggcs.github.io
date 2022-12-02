@@ -1,8 +1,15 @@
 ---
 layout: post
-title: "在线表格技术"
+title: "在线表格项目开发"
 date: 2022-12-01 01:26:35 +0800
 categories: project
+tags:
+  - 项目工程实践
+  - 在线表格
+  - 在线excel
+  - spreadsheet
+  - 前端
+  - js
 ---
 
 - 分类: 项目工程实践
@@ -20,7 +27,7 @@ categories: project
 
 根据领导需求查看了几种表格方案，如下:
 
-<img class="shadow" src="/images/2022-12-01-1.jpg" >
+<img src="/images/2022-12-01-1.jpg" >
 
 结论：
 
@@ -31,6 +38,12 @@ categories: project
 
 <tg-tit>二. 实践情况</tg-tit>
 
+<b>演示</b>
+
+<video  controls>
+  <source src="/images/2022-12-01-6.mp4" type="video/mp4">
+</video>
+
 <b>收集&整理到的需求要点</b>
 
 <tg-p>1. 实现基本的表格功能(单元格，滚动，行列索引...)</tg-p>
@@ -40,7 +53,7 @@ categories: project
 - 支持增减模块
 - 多种输入插件(计数器，下拉，百分比，日期选择器等)
 - 单元格状态提示，禁用，草稿，错误，必填等
-- 支持EXCEL函数公式
+- 支持 EXCEL 函数公式
 - 其他...
 
 <tg-p>4. 操作</tg-p>
@@ -74,8 +87,44 @@ categories: project
 
 <b>数据流转</b>
 
-<img class="shadow" src="/images/2022-12-01-2.jpg" >
+<a href="https://kdocs.cn/l/ci7Gc8uO6Z40" target="_blank" title="【金山文档】 PPS_数据转换图">原图地址</a>
+
+<img src="/images/2022-12-01-2.jpg" >
+<img src="/images/2022-12-01-3.png" >
 
 <b>类图</b>
 
+<a href="https://kdocs.cn/l/crDTJY1e4Iz2" target="_blank" title="【金山文档】 类图">原图地址</a>
+
+<img src="/images/2022-12-01-4.png" >
+
 <b>执行流程</b>
+
+<a href="https://kdocs.cn/l/ci8dcsj51uPB" target="_blank" title="【金山文档】 执行流程">原图地址</a>
+
+<img src="/images/2022-12-01-5.png" >
+
+<b>技术细节-1-表格绘制</b>
+
+<b>技术细节-2-数据对象&功能方法分离</b>
+
+<b>技术细节-3-编辑器配置</b>
+
+<b>技术细节-4-公式计算</b>
+
+<b>技术细节-5-事件发布&订阅</b>
+
+<b>技术细节-6-业务配置&表格支持转换</b>
+
+<b>技术细节-7-统一的错误收集&反馈系统</b>
+
+<tg-tit>项目总结</tg-tit>
+
+- 理清&沟通需求相对于技术点调研，同样是件费劲的事
+- 比较复杂的项目要做好前置的沟通，争取到领导和同事们最大程度的支持和配合(争取到合理的工时)，是个较长期且有节奏的建设过程
+- x-spreadsheet在各个功能点上的设计都很不错，学习到了很多
+- 在线表格可以支撑公司常年的多样且复杂的预算编制和填报需求，是有很大业务价值的
+
+<tg-tit>参考</tg-tit>
+
+- [x-spreadsheet](https://github.com/myliang/x-spreadsheet)

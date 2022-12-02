@@ -14,7 +14,16 @@
 .post-content code {
   color: #476582;
 }
-
+.post-content video,
+.post-content img {
+  max-width: 100%;
+  border: 1px solid #ededed;
+  padding: 5px;
+  border-radius: 5px;
+}
+.post-content img + img {
+  margin-top: 5px;
+}
 /************************/
 /******* 自定义标签 *******/
 /************************/

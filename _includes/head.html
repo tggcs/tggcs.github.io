@@ -4,12 +4,9 @@
 <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>唐鸽的博客 | 唐鸽的博客，记录一些开发实践信息，记录一些其他信息.</title>
 <meta name="generator" content="Jekyll v3.9.2" />
-<meta property="og:title" content="唐鸽的博客" />
+<meta property="og:title" content="{{ page.title }}">
 <meta property="og:locale" content="en_US" />
-<meta
-  name="description"
-  content="唐鸽的博客，记录一些开发实践信息，记录一些其他信息."
-/>
+<meta name="description" content="{{ site.description }}">
 <meta
   property="og:description"
   content="唐鸽的博客，记录一些开发实践信息，记录一些其他信息."
@@ -20,6 +17,9 @@
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="唐鸽的博客" />
+{% for tag in page.tags %}
+<meta property="article:tag" content="{{ tag }}">
+{% endfor %}
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
