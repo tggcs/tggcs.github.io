@@ -106,6 +106,24 @@ tags:
 
 <b>技术细节-1-表格绘制</b>
 
+- canvas 模糊问题的处理
+
+<p class="codepen" data-height="300" data-default-tab="js,result" data-slug-hash="jOKQMYo" data-preview="true" data-user="tggcs" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/tggcs/pen/jOKQMYo">
+  canvas's blurry problems</a> by 唐鸽 (<a href="https://codepen.io/tggcs">@tggcs</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+
+- 表格绘制简单实现
+
+<p class="codepen" data-height="300" data-default-tab="js,result" data-slug-hash="zYaMKJK" data-preview="true" data-user="tggcs" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/tggcs/pen/zYaMKJK">
+  canvas grid demo</a> by 唐鸽 (<a href="https://codepen.io/tggcs">@tggcs</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+
 <b>技术细节-2-数据对象&功能方法分离</b>
 
 <b>技术细节-3-编辑器配置</b>
@@ -122,7 +140,7 @@ tags:
 
 - 理清&沟通需求相对于技术点调研，同样是件费劲的事
 - 比较复杂的项目要做好前置的沟通，争取到领导和同事们最大程度的支持和配合(争取到合理的工时)，是个较长期且有节奏的建设过程
-- x-spreadsheet在各个功能点上的设计都很不错，学习到了很多
+- x-spreadsheet 在各个功能点上的设计都很不错，学习到了很多
 - 在线表格可以支撑公司常年的多样且复杂的预算编制和填报需求，是有很大业务价值的
 
 <tg-tit>参考</tg-tit>
