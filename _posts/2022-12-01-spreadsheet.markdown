@@ -126,15 +126,33 @@ tags:
 
 <b>技术细节-2-数据对象&功能方法分离</b>
 
-<b>技术细节-3-编辑器配置</b>
+表格信息和数据处理方法都存储在`DataProxy.ts`中
 
-<b>技术细节-4-公式计算</b>
+<img src="/images/2022-12-01-7.jpg" >
 
-<b>技术细节-5-事件发布&订阅</b>
+<b>技术细节-3-公式计算</b>
 
-<b>技术细节-6-业务配置&表格支持转换</b>
+- step1: 配置公式，保存为id信息
 
-<b>技术细节-7-统一的错误收集&反馈系统</b>
+`IF(define_40b3c04b7c414a9f8bdf97afe7c273a3== '亚洲',(INPUTNUMBE_r_03561c77aa4a49f5afb7bb573ee16bcd-INPUTNUMBE_r_ffa41f7e2c4742f59e85ee1227890422)* 0.8,(INPUTNUMBE_r_03561c77aa4a49f5afb7bb573ee16bcd-INPUTNUMBE_r_ffa41f7e2c4742f59e85ee1227890422)* 0.6)`
+<img src="/images/2022-12-01-9.jpg" >
+
+- step2: `genSheetdata2`转换为标准excel公式 
+
+<img src="/images/2022-12-01-10.jpg" >
+
+- step3: excel公式计算实现，这里直接用了开源框架 `formulajs`
+
+<p class="codepen" data-height="300" data-default-tab="js,result" data-slug-hash="VwdVqem" data-preview="true" data-user="tggcs" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/tggcs/pen/VwdVqem">
+  Untitled</a> by 唐鸽 (<a href="https://codepen.io/tggcs">@tggcs</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+
+<b>技术细节-4-业务配置&表格支持转换</b>
+
+- 具体见项目启动`test.html`
 
 <tg-tit>项目总结</tg-tit>
 
