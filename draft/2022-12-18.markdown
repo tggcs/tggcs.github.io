@@ -1,0 +1,256 @@
+---
+layout: post
+title: "在线表格项目开发"
+date: 2022-12-01 01:26:35 +0800
+categories: project
+tags:
+  - 项目工程实践
+  - 在线表格
+  - 在线excel
+  - spreadsheet
+  - 前端
+  - js
+---
+
+- 单一职责原则 S
+- 开发-封闭原则 O
+- 里氏替换原则 L
+- 接口隔离原则 I
+- 依赖倒置原则 D
+
+books
+- head first
+- 大话设计模式
+- js设计模式与开发实践
+- https://www.patterns.dev/posts/introduction/
+
+<tg-tit>N. 设计原则</tg-tit> 
+
+## 单一职责原则 Single Responsibility Principle(SRP)
+
+就一个类而言，应该仅有一个引起它变化的原因。一个对象（方法）只做一件事情(js)。
+
+### 应用
+
+参考 迭代器模式
+
+😔 循环和具体逻辑在一起
+```js
+var appendDiv = function (data) {
+  for (var i = 0, l = data.length; i < l; i++) {
+    var div = document.createElement('div');
+    div.innerHTML = data[i];
+    document.body.appendChild(div);
+  }
+};
+appendDiv([1, 2, 3, 4, 5, 6]); 
+```
+
+😄 循环和具体逻辑分开
+```js
+var each = function (obj, callback) {
+  var value,
+    i = 0,
+    length = obj.length,
+    isArray = isArraylike(obj); // isArraylike 函数未实现，可以翻阅 jQuery 源代码
+  if (isArray) { // 迭代类数组
+    for (; i < length; i++) {
+      callback.call(obj[i], i, obj[i]);
+    }
+  } else {
+    for (i in obj) { // 迭代 object 对象
+      value = callback.call(obj[i], i, obj[i]);
+    }
+  }
+  return obj;
+};
+var appendDiv = function (data) {
+  each(data, function (i, n) {
+    var div = document.createElement('div');
+    div.innerHTML = n;
+    document.body.appendChild(div);
+  });
+};
+appendDiv([1, 2, 3, 4, 5, 6]);
+appendDiv({ a: 1, b: 2, c: 3, d: 4 });
+```
+### 违反 SRP 原则
+
+在方便性与稳定性之间要有一些取舍。具体是选择方便性还是稳定性，并没有标准答案，而是要取决于具体的应用环境。
+
+### SRP 原则的优缺点
+
+优：降低了单个类或者对象的复杂度
+
+缺：增加编写代码的复杂度
+
+## 开发-封闭原则 Open Closed principle(OCP)
+
+对拓展开放，对修改关闭
+
+### 接受第一次愚弄
+
+在最初编写代码的时候，先假设变化永远不会发生，这有利于我们迅速完成需求。当变化发生并且对我们接下来的工作造成影响的时候，可以再回过头来封装这些变化的地方。
+
+## 里氏替换原则 Liskov Substitution principle (LSP)
+
+### 定义
+
+` that objects of a superclass should be replaceable with objects of its subclasses without breaking the application`
+
+- 子类&父类 行为要一致~（所以，让正方形继承长方形，都实现的面积计算就是可能会冲突的）
+
+### 参考
+
+- [SOLID Design Principles Explained: The Liskov Substitution Principle with Code Examples](https://stackify.com/solid-design-liskov-substitution-principle/)
+- [What Is Liskov Substitution Principle (LSP)? With Real World Examples!](https://blog.knoldus.com/what-is-liskov-substitution-principle-lsp-with-real-world-examples/)
+
+## 接口隔离原则 Interface Segregation principle（ISP）
+
+js 里用不到;
+
+**_Clients should not be forced to depend upon interfaces that they do not use_**
+
+就是将接口按业务功能需要，拆分多个小的接口组合使用
+
+### 参考
+
+1. [SOLID Design Principles Explained: Interface Segregation with Code Examples](https://stackify.com/interface-segregation-principle/)
+
+## 依赖倒置原则 Dependency Inversion Principle(DIP)
+
+1. 高层模块不应该依赖于低层模块，两者都应该依赖抽象
+2. 抽象模块不应该依赖细节。细节应该依赖抽象
+
+😔 再加MongoDB，需要引入if-else
+```php
+<?php 
+
+class BudgetReport {
+    public $database;
+
+    public function __construct($database)
+    {
+        $this->database = $database;
+    }
+
+    public function open(){
+        $this->database->get();
+    }
+
+    public function save(){
+        $this->database->insert();
+    }
+}
+
+class MySQLDatabase {
+    // fields
+
+    public function get(){
+        // get by id
+    }
+
+    public function insert(){
+        // inserts into db
+    }
+
+    public function update(){
+        // update some values in db
+    }
+
+    public function delete(){
+        // delete some records in db
+    }
+}
+
+// Client
+$database = new MySQLDatabase();
+$report = new BudgetReport($database);
+
+$report->open();
+```
+
+😄 都依赖`DatabaseInterface`抽象，BudgetReport不用更改
+```php
+interface DatabaseInterface {
+    public function get();
+    public function insert();
+    public function update();
+    public function delete();
+}
+
+class MySQLDatabase implements DatabaseInterface {
+    // fields
+
+    public function get(){
+        // get by id
+    }
+
+    public function insert(){
+        // inserts into db
+    }
+
+    public function update(){
+        // update some values in db
+    }
+
+    public function delete(){
+        // delete some records in db
+    }
+}
+
+class MongoDB implements DatabaseInterface {
+    // fields
+
+    public function get(){
+        // get by id
+    }
+
+    public function insert(){
+        // inserts into db
+    }
+
+    public function update(){
+        // update some values in db
+    }
+
+    public function delete(){
+        // delete some records in db
+    }
+}
+
+class BudgetReport {
+    public $database;
+
+    public function __construct(DatabaseInterface $database)
+    {
+        $this->database = $database;
+    }
+
+    public function open(){
+        $this->database->get();
+    }
+
+    public function save(){
+        $this->database->insert();
+    }
+}
+
+// Client
+$mysql = new MySQLDatabase();
+$report_mysql = new BudgetReport($mysql);
+
+$report_mysql->open();
+
+$mongo = new MongoDB();
+$report_mongo = new BudgetReport($mongo);
+
+$report_mongo->open();
+```
+### 参考
+
+- [Understanding SOLID Principles: Dependency Inversion](https://dev.to/tamerlang/understanding-solid-principles-dependency-inversion-1b0f)
+
+
+
+ 
