@@ -1,0 +1,107 @@
+---
+layout: post
+title: "JS设计模式"
+date: 2022-12-16 01:26:35 +0800
+categories: project
+tags:
+  - 设计模式
+  - 前端
+  - js
+---
+
+- 分类: 设计模式
+
+近期要做个 JS 相关的设计模式的分享，在这也同步梳理下。
+
+### 目录
+
+- 一. 动态类型语音&鸭子类型&面向接口编程
+- 二. 多态
+
+<tg-tit>一. 动态类型语音&鸭子类型&面向接口编程</tg-tit>
+
+> 在动态语音中(js)，利用鸭子类型思想，我们不必借助超类，就能实现‘面向接口编程’ from `曾探-js设计模式`
+
+**_ todo1 _**
+
+静态类型语言的面向接口编程 demo
+
+```
+...
+```
+
+js 中的面向接口编程 demo
+
+```
+...
+```
+
+<tg-tit>二.多态</tg-tit>
+
+含义：同一操作作用于不同的对象上面，可以产生不同的解释和不同的执行结
+果
+
+> 多态最根本的作用就是通过把过程化的条件分支语句转化为对象的多态性，从而
+消除这些条件分支语句。 from `曾探-js设计模式`
+
+1. 静态类型语音
+
+支持向上转型，鸡在叫 => 动物在叫
+
+```java
+public abstract class Animal {
+ abstract void makeSound(); // 抽象方法
+}
+public class Chicken extends Animal {
+  public void makeSound() {
+    System.out.println("咯咯咯");
+  }
+}
+public class Duck extends Animal {
+  public void makeSound() {
+    System.out.println("嘎嘎嘎");
+  }
+}
+Animal duck = new Duck(); // (1)
+Animal chicken = new Chicken(); // (2)
+
+public class AnimalSound {
+  public void makeSound(Animal animal) { // 接受 Animal 类型的参数
+    animal.makeSound();
+  }
+}
+public class Test {
+  public static void main(String args[]) {
+  AnimalSound animalSound = new AnimalSound();
+  Animal duck = new Duck();
+  Animal chicken = new Chicken();
+    animalSound.makeSound(duck); // 嘎嘎嘎
+    animalSound.makeSound(chicken); // 咯咯咯
+  }
+}
+```
+
+2. 动态类型语音(js)
+
+在运行时，只要存在sound方法即可
+
+```js
+// 做什么(不变的事物)
+var makeSound = function (animal) {
+  animal.sound()
+}
+var Duck = function () {}
+// 怎样做(可变的事物)
+Duck.prototype.sound = function () {
+  console.log('嘎嘎嘎')
+}
+var Chicken = function () {}
+// 怎样做(可变的事物)
+Chicken.prototype.sound = function () {
+  console.log('咯咯咯')
+}
+makeSound(new Duck()) // 嘎嘎嘎
+makeSound(new Chicken()) // 咯咯咯
+```
+
+<b>绝大部分设计模式的实现都离不开多态性的思想</b>
