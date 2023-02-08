@@ -121,7 +121,7 @@ function effect(fn) {
 
 ### bucket 桶结构
 
-依赖收集桶结构&deps绑定
+依赖收集桶结构&deps 绑定
 
 <img src="/images/2022-10-01/1.jpg" >
 
@@ -198,5 +198,89 @@ run() {
 
 ## 三.依赖清理
 
-改用二进制标记位的方式，较之前全部清除再收集的方式有更良好的性能；
+改用二进制标记位的方式，较之前全部清除再收集的方式有更良好的性能(仅删除不需要的副作用函数)；
 
+设定基本场景，单击 add 按钮后，`counter.visible`值切换，`visible===false`时，targetMap 桶内`counter.num2`的 dep 集合应该清空；
+
+```html
+<button onclick="toggle()">toggle</button>
+<script>
+  const counter = reactive({ visible: true, num2: 0 });
+
+  effect(() => {
+    if (counter.visible) {
+      console.log("num2", counter.num2);
+    }
+  });
+
+  let visible = true;
+  function toggle() {
+    visible = !visible;
+    counter.visible = visible;
+  }
+</script>
+```
+
+### 源码拆分
+
+- 添加三个变量，用于控制
+
+```js
+let effectTrackDepth = 0; // 当前所在副作用函数层级
+let trackOpBit = 1; // 所在层级的二进制标记
+const maxMarkerBits = 30; // 设定effect最大嵌套30层
+```
+
+- 通过`已被收集`和`新的依赖`两个标记来筛选剔除无效副作用函数
+
+副作用函数执行前，执行`initDepMarkers`，将存在`deps`打上`已被收集`标记；副作用函数执行前，执行`finalizeDepMarkers`，将`effect`是 `已被收集` && 非`新的依赖` 删除掉；
+
+```js
+initDepMarkers() {
+  ...
+  deps[i].w |= trackOpBit // set was tracked
+}
+finalizeDepMarkers() {
+  ...
+  if (wasTracked(dep) && !newTracked(dep)) {
+    dep.delete(effect)
+  }
+}
+run() {
+  try {
+    ...
+    if (effectTrackDepth <= maxMarkerBits) {
+      initDepMarkers(this)
+    }
+    return this.fn();
+  } finally {
+    if (effectTrackDepth <= maxMarkerBits) {
+      finalizeDepMarkers(this)
+    }
+    ...
+  }
+}
+```
+
+<p class="codepen" data-height="300" data-default-tab="js" data-slug-hash="vYaMvPW" data-user="tggcs" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/tggcs/pen/vYaMvPW">
+  vue-reactivity-2</a> by 唐鸽 (<a href="https://codepen.io/tggcs">@tggcs</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+
+<img src="/images/2022-10-01/2.png" >
+
+- 位操作
+
+参考 [权限设计应用](/bit/2019/05/02/bit.html#h-位运算)
+
+四.Ref & toRef
+
+五.readonly & shallowReadonly
+
+六.shallowReactive
+
+七.computed
+
+八.watch
