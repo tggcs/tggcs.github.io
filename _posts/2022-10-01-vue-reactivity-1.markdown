@@ -8,7 +8,7 @@ tags: ["vue源码", "vue3", "响应式原理", "前端", "js"]
 # sidebar: []
 ---
 
-近期有空看了下 vue3 源码和相关书籍，同时将笔记同步到了博客；后面忘了可以再看看。
+近期有空看了下 vue3 源码和相关书籍，同时将笔记同步到了博客。后面忘了可以再看看。为了理清核心主线逻辑，代码均移除了次要&边界逻辑。
 
 ## 一. 基本实现
 
@@ -275,7 +275,52 @@ run() {
 
 参考 [权限设计应用](/bit/2019/05/02/bit.html#h-位运算)
 
-四.Ref & toRef
+## 四.Ref
+
+为了实现原始值的响应式，vue3提供了 ref api; 设定如下场景
+
+```js 
+const a = ref(1)
+effect(() => {
+  console.log('effect', a.value)
+})
+a.value = 2
+```
+
+### 源码拆分
+
+通过返回新实例，并劫持其value属性的getter&setter即可；并加入tracker\&trigger;
+
+```js
+function ref(value) {
+  return new RefImpl(value)
+}
+
+class RefImpl {
+  _value
+  constructor(value) {
+    this._value = (value)
+  }
+
+  get value() {
+    trackRefValue(this)
+    return this._value
+  }
+  set value(newVal) {
+    this._value = newVal
+    triggerRefValue(this, newVal)
+  }
+}
+```
+
+### 在线演示
+
+<p class="codepen" data-height="300" data-default-tab="js" data-slug-hash="PoBvQKx" data-user="tggcs" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/tggcs/pen/PoBvQKx">
+  vue-reactivity-3</a> by 唐鸽 (<a href="https://codepen.io/tggcs">@tggcs</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
 
 五.readonly & shallowReadonly
 
