@@ -45,3 +45,9 @@ awesome list: https://github.com/newTendermint/awesome-analytics
 ## umami 搭建
 
 选择了 umami，功能强大且 js 体系比较适合我；
+
+### 搭建
+
+### 相关技术
+
+- Prisma.io ORM框架
