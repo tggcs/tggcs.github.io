@@ -132,13 +132,19 @@ CMD ["pnpm", "start-docker"]
 
 ```js
 const alias = {
-  "/": "导航页",
-  "/login": "登录页",
+  "^/": "导航页",
+  "^/login": "登录页",
   // system 1
-  "/auth": "统一权限",
+  "^/auth": "统一权限",
 };
 
-const aliasKeys = Object.keys(alias);
+const aliasRegKeys = Object.keys(itAlias).map((regStr) => {
+  return {
+    regExp: new RegExp(regStr),
+    len: regStr.length,
+    key: regStr,
+  };
+});
 
 /**
  * 按最长路径匹配
@@ -146,24 +152,40 @@ const aliasKeys = Object.keys(alias);
  * @returns
  */
 const getLongestMatchString = (url) => {
-  return aliasKeys
-    .filter((k) => url.startsWith(k))
+  return aliasRegKeys
+    .filter(({ regExp }) => regExp.test(url))
     .reduce((prev, current) => {
-      return prev.length > current.length ? prev : current;
+      return prev.len > current.len ? prev : current;
     }, "");
 };
 
 export const getAlias = (url) => {
   const matchKey = getLongestMatchString(url);
-  return matchKey ? alias[matchKey] : url;
+  return itAlias[matchKey.key] || "";
 };
 ```
 
 <img src="/images/2023-02-08/3.jpg" >
 
-<b>2. 登录者信息采集</b>
+<b>2. `data-rm-querys`拓展</b>
 
-...
+新增`data-rm-querys`配置项，值为逗号分隔字符串；配置后，页面统计会移除 query 入参信息，解决同一页面的不同 query 的冗余统计信息；
+
+```html
+<script
+  async
+  defer
+  data-website-id="b09aeacd-9cae-443a-b55c-dc5e44747043"
+  src="http://mis.t.aispeech.com.cn/umamiAnalyze/umami.js"
+  data-domains="test.umami.com"
+  data-rm-querys="id,name"
+></script>
+```
+
+<img src="/images/2023-02-08/4.jpg" >
+
+
+ 
 
 ### 相关技术
 

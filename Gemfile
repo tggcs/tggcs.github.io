@@ -11,6 +11,8 @@ gemspec
 
 require 'json'
 require 'open-uri'
-versions = JSON.parse(open('https://pages.github.com/versions.json').read)
+# versions = JSON.parse(open('https://pages.github.com/versions.json').read)
 
-gem 'github-pages', versions['github-pages']
+# gem 'github-pages', versions['github-pages']
+# 不太懂，这里直接从 https://pages.github.com/versions.json 中拿数字吧(能用就行)
+gem 'github-pages', 228 # versions['github-pages']
