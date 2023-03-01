@@ -1,4 +1,3 @@
-@use "sass:math";
 /*
  * Post menu
  */
@@ -18,7 +17,7 @@
   .post-menu-content {
     ul {
       border-left: 1px solid #e9ecef;
-      $indent: $base-font-size-div4;
+      $indent: $base-font-size / 4;
       $active-bgcolor: #ecebec;
 
       @for $i from 2 to 7 {

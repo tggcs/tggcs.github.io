@@ -25,7 +25,7 @@
 # in the templates via {{ site.myvariable }}.
 
 title: Your awesome title
-email: your-email@domain.com
+email: 2662530690@qq.com
 author: GitHub User
 
 # Copyright setting
@@ -66,7 +66,7 @@ yat:
 # content_width: "920px"
 
 # Google analytics
-google_analytics: "G-KGGWV21C0M"
+# google_analytics: [Tracking ID]
 
 # If you want to generate website sitemap, you can set true
 # sitemap: false

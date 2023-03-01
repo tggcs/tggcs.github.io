@@ -4,14 +4,11 @@
 
 $base-font-family: Helvetica, Arial, Oswald, sans-serif, !default;
 $base-font-size: 14px !default;
-$base-font-size-div4: $base-font-size / 4;
 $base-font-weight: 400 !default;
 $small-font-size:  $base-font-size * 0.875 !default;
 $base-line-height: 1.6 !default;
 
 $spacing-unit:     30px !default;
-$spacing-unit-div2: $spacing-unit/2;
-$spacing-unit-div3: $spacing-unit/3;
 
 $text-color:       #454545 !default;
 $background-color: #fff !default;
@@ -25,7 +22,6 @@ $white-color: #fdfdfd !default;
 $table-text-align: left !default;
 
 $header-height: $base-line-height * $base-font-size * 2.85 !default;
-$header-height-div15: $header-height/1.5 !default;
 $header-text-color: invert($theme-color) !default;
 $header-background-color: $theme-color !default;
 
@@ -70,6 +66,5 @@ $on-laptop:        800px !default;
   "misc/common-list",
   "misc/google-translate",
   "misc/gitment",
-  "misc/click-to-top",
-  "custome/tg.markdown"
+  "misc/click-to-top"
 ;
