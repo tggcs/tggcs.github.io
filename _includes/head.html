@@ -10,9 +10,10 @@
   <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
   <script src="{{ "/assets/js/main.js" | relative_url }}"></script>
   {%- feed_meta -%}
-  {%- if jekyll.environment == 'production' and site.google_analytics -%}
+  <!-- {%- if jekyll.environment == 'production' and site.google_analytics -%}
   {%- include extensions/google-analytics.html -%}
-  {%- endif -%}
+  {%- endif -%} -->
+  {%- include extensions/umami-analytics.html -%}
   {%- include extensions/code-highlight.html -%}
   {%- include custom-head.html -%}
 </head>

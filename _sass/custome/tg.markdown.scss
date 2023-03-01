@@ -1,0 +1,55 @@
+/***********************/
+/******* 重置样式 *******/
+/***********************/
+.post-content {
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  blockquote {
+    font-size: 14px;
+    font-style: normal;
+    color: #3c3c3cb3;
+  }
+  code {
+    color: #476582;
+  }
+  video, img {
+    max-width: 100%;
+    border: 1px solid #ededed;
+    padding: 5px;
+    border-radius: 5px;
+  }
+  img + img {
+    margin-top: 5px;
+  }
+}
+ 
+/************************/
+/******* 自定义标签 *******/
+/************************/
+
+/* 自定义标题 */
+tg-tit {
+  margin: 4rem 0 1.8rem;
+  border-top: 1px solid #3c3c3c1f;
+  padding-top: 1.8rem;
+  font-size: 24px;
+  letter-spacing: -.02em;
+  font-weight: 600;
+  line-height: 1.5;
+  display: block;
+}
+/* 自定义段落 */
+tg-p {
+  display: block;
+}
+/* 自定义explain */
+explain {
+  border: 1px solid #42b883;
+  border-radius: 5px;
+  padding: 15px;
+  margin: 15px 0;
+  display: inline-block;
+  color: #0000008c;
+  background-color: #f9f9f9;
+}
