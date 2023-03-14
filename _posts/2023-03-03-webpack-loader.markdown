@@ -14,7 +14,7 @@ This allows you to bundle any static resource way beyond JavaScript.
 
 ## demo 演示
 
-用一个经典的 css 配置演示下工作流，debug 代码：[test-loader-css](https://github.com/tggcs/test-webpack/tree/loader-css){:target="\_blank"}
+用一个经典的 css 配置演示下工作流，debug 代码：[test-loader-css](https://github.com/tggcs/test-webpack/tree/loaders-css){:target="\_blank"}
 
 src/color.css
 
@@ -84,27 +84,32 @@ module.exports = {
 
 ```md
 |- a-loader `pitch`
-|- b-loader `pitch`
-|- c-loader `pitch`
-|- requested module is picked up as a dependency
-|- c-loader normal execution
-|- b-loader normal execution
+  |- b-loader `pitch`
+    |- c-loader `pitch`
+      |- requested module is picked up as a dependency
+    |- c-loader normal execution
+  |- b-loader normal execution
 |- a-loader normal execution
 ```
 
 ### 1.style-loader.pitch
 
-经过`pitch`执行后，返回 head 内嵌 style 逻辑和相应的 css 文件
+功能：经过`pitch`执行后，返回 head 内嵌 style 逻辑和相应的 css 文件
+
+工作流：
+
+1. style-loader 响应 pitch 钩子，生成内嵌`行内loader`的 js 逻辑
+2. pitch 中断(loaderIndex = -1)
 
 <img src="/images/2023-03-03/1.jpg" >
 
-这里中断了。但生成了行内 内联 loader，后续又开始执行新的 loader 配置？？？？？(todo)
-
-https://juejin.cn/post/7037696103973650463#heading-9
-
 ### 2.colors-map-loader
 
-执行自定义的简单逻辑(替换 color 值)
+功能：执行自定义的简单逻辑(替换 color 值)
+
+工作流：
+
+1. 继前面生成的`行内loader`再次执行 loader
 
 <img src="/images/2023-03-03/2.jpg" >
 <img src="/images/2023-03-03/3.jpg" >
@@ -131,7 +136,7 @@ var _default = loaderAPI;
 exports.default = _default;
 ```
 
-## 关键的 loader-runner
+## 核心插件 loader-runner
 
 考虑到不能穷举所有文件类型。webpack 设计了 loader 的方式，让开发者有自行处理文件的能力；
 
