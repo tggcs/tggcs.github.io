@@ -98,6 +98,10 @@ module.exports = {
 
 <img src="/images/2023-03-03/1.jpg" >
 
+这里中断了。但生成了行内 内联 loader，后续又开始执行新的 loader 配置？？？？？(todo)
+
+https://juejin.cn/post/7037696103973650463#heading-9
+
 ### 2.colors-map-loader
 
 执行自定义的简单逻辑(替换 color 值)
@@ -237,10 +241,6 @@ function iterateNormalLoaders(options, loaderContext, args, callback) {
 }
 ```
 
-## 经典 style-loader 了解一下
-
-pitch 中断了？
-
-https://juejin.cn/post/7037696103973650463#heading-9
+## 经典 \*-loader 了解一下
 
 ...
