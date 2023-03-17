@@ -1,0 +1,15 @@
+---
+layout: post
+title: webpack 主流程 实现了解
+subtitle: 了解下webpack 部分的代码
+author: tg
+categories: webpack
+tags: ["webpack", "前端", "构建工具", "javascript"]
+# sidebar: []
+---
+
+工作流：1.配置项解析 => 2.载入内外部插件 => 3.开始解析文件 => 4.应用loader => 5.转AST结构 => 6.再解析引用文件 => 7.递归到步骤3 => 8.chunk分包处理 => 9.组织&吐出文件
+
+## 示意图
+
+<img src="/images/2023-03-10/1.jpg" >
