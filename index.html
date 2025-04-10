@@ -1,8 +1,328 @@
----
-# Feel free to add content and custom Front Matter to this file.
-# To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
-
-layout: home
-title: Home
-banner: "/assets/images/banners/home.jpeg"
----
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>可以和我和好吗？</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        h1 {
+            color: #ff6b6b;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .image-container {
+            width: 300px;
+            height: 300px;
+            margin: 20px auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .image-container img:hover {
+            transform: scale(1.05);
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            position: relative;
+        }
+        
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        #makeUp {
+            background-color:#ff6b9d;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+        
+        #sorry {
+            background-color: #ff6b6b;
+            color: white;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+            }
+        }
+        
+        .heart {
+            position: absolute;
+            pointer-events: none;
+            animation: float 4s linear forwards;
+            color: #ff6b6b;
+            font-size: 20px;
+        }
+        
+        /* 新增的和好成功页面样式 */
+        .success-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .success-page h1 {
+            font-size: 3em;
+            color: #ff6b6b;
+            margin-bottom: 20px;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .success-page p {
+            font-size: 1.5em;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <h1>可以和我和好吗？</h1>
+        
+        <div class="image-container">
+            <img id="displayImage" src="" alt="可爱图片">
+        </div>
+        
+        <div class="buttons">
+            <button id="makeUp">和好</button>
+            <button id="sorry">对不起，我知道错了</button>
+        </div>
+    </div>
+    
+    <!-- 新增的和好成功页面 -->
+    <div class="success-page" id="successPage">
+        <h1>太好啦！我们和好啦！</h1>
+        <p>❤️ 谢谢你原谅我 ❤️</p>
+    </div>
+    
+    <script>
+        // 可配置的图片数组
+        const images = [
+            './imgs/1.jpg',
+            './imgs/2.jpg',
+            './imgs/3.jpg',
+            './imgs/4.jpg',
+            './imgs/5.jpg',
+            './imgs/6.jpg',
+            './imgs/7.jpg',
+            './imgs/8.jpg',
+            './imgs/9.jpg',
+            './imgs/10.jpg',
+        ];
+        
+        // 按钮文本序列
+        const sorryTexts = [
+            "对不起，我知道错了",
+            "零花钱都给你",
+            "欲擒故纵，我懂",
+            "我请你吃大餐",
+            "给你买包包",
+            "带你去旅游",
+            "以后都听你的",
+            "我跪键盘",
+            "写保证书",
+            "❤️ 你最好啦 ❤️"
+        ];
+        
+        let currentImageIndex = 0;
+        let currentSorryIndex = 0;
+        let makeUpSize = 1;
+        
+        const makeUpBtn = document.getElementById('makeUp');
+        const sorryBtn = document.getElementById('sorry');
+        const displayImage = document.getElementById('displayImage');
+        const successPage = document.getElementById('successPage');
+        const mainContent = document.querySelector('.main-content');
+        
+        // 初始化显示第一张图片
+        displayImage.src = images[currentImageIndex];
+        
+        // 和好按钮点击事件
+        makeUpBtn.addEventListener('click', function() {
+            // createConfetti();
+            createHearts();
+            
+            // 显示成功页面
+            mainContent.style.display = 'none';
+            successPage.style.display = 'flex';
+            
+            // 重置状态
+            currentImageIndex = 0;
+            currentSorryIndex = 0;
+            makeUpSize = 1;
+            displayImage.src = images[currentImageIndex];
+            sorryBtn.textContent = sorryTexts[currentSorryIndex];
+            makeUpBtn.style.transform = 'scale(1)';
+        });
+        
+        // 道歉按钮点击事件
+        sorryBtn.addEventListener('click', function() {
+            // 更新图片
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            displayImage.src = images[currentImageIndex];
+            
+            // 更新道歉按钮文本
+            currentSorryIndex = (currentSorryIndex + 1) % sorryTexts.length;
+            sorryBtn.textContent = sorryTexts[currentSorryIndex];
+            
+            // 增大和好按钮
+            makeUpSize += 0.4;
+            makeUpBtn.style.transform = `scale(${makeUpSize})`;
+            
+            // 如果和好按钮足够大，隐藏道歉按钮
+            if (makeUpSize > 10) {
+                sorryBtn.style.visibility = 'hidden';
+            }
+            
+            // 创建动画效果
+            // createBubbles();
+        });
+        
+        // 创建彩色气泡效果
+        function createBubbles() {
+            for (let i = 0; i < 10; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'confetti';
+                bubble.style.left = Math.random() * 100 + 'vw';
+                bubble.style.top = '100vh';
+                bubble.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                bubble.style.width = Math.random() * 10 + 5 + 'px';
+                bubble.style.height = bubble.style.width;
+                document.body.appendChild(bubble);
+                
+                const animationDuration = Math.random() * 3 + 2;
+                bubble.style.animation = `float ${animationDuration}s linear forwards`;
+                
+                setTimeout(() => {
+                    bubble.remove();
+                }, animationDuration * 1000);
+            }
+        }
+        
+        // 创建彩色纸屑效果
+        function createConfetti() {
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '50vh';
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                document.body.appendChild(confetti);
+                
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 10 + 5;
+                const x = Math.cos(angle) * velocity;
+                const y = Math.sin(angle) * velocity;
+                
+                let posX = parseFloat(confetti.style.left);
+                let posY = parseFloat(confetti.style.top);
+                
+                const animate = () => {
+                    posX += x;
+                    posY += y;
+                    confetti.style.left = posX + 'px';
+                    confetti.style.top = posY + 'px';
+                    
+                    if (posY < window.innerHeight) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        confetti.remove();
+                    }
+                };
+                
+                animate();
+            }
+        }
+        
+        // 创建爱心效果
+        function createHearts() {
+            for (let i = 0; i < 30; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = '80vh';
+                heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+                document.body.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 4000);
+            }
+        }
+    </script>
+</body>
+</html>
